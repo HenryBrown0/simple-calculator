@@ -1,6 +1,6 @@
 import javafx.scene.control.Label;
 
-public class Display {
+class Display {
   private long current;
   private long total;
   private String currentAsString;
@@ -76,12 +76,10 @@ public class Display {
   }
 
   public Label getCurrent() {
-	Label output = new Label(currentAsString);
-    return output;
+	return new Label(currentAsString);
   }
 
   public Label getTotal() {
-	Label output = new Label(Long.toString(total));
-	return output;
+	return new Label(Long.toString(total));
   }
 }
