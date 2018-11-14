@@ -1,4 +1,4 @@
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 
 public class Display {
   private long current;
@@ -75,13 +75,13 @@ public class Display {
 	method = "";
   }
 
-  public Text getCurrent() {
-    Text output = new Text(currentAsString);
+  public Label getCurrent() {
+	Label output = new Label(currentAsString);
     return output;
   }
 
-  public Text getTotal() {
-	Text output = new Text(Long.toString(total));
+  public Label getTotal() {
+	Label output = new Label(Long.toString(total));
 	return output;
   }
 }

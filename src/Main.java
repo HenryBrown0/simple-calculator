@@ -3,13 +3,16 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
 public class Main extends Application {
   private Stage window;
   private Display display;
+
+  public static void main(String[] args) {
+	launch(args);
+  }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -24,20 +27,19 @@ public class Main extends Application {
 	VBox layout = new VBox();
 	GridPane numberPad = addNumberButtons(display);
 
+	layout.setPadding(new Insets(5, 0, 0, 0));
 	layout.getChildren().addAll(display.getTotal(), display.getCurrent(), numberPad);
 
-	window.setScene(new Scene(layout));
+	Scene scene = new Scene(layout);
+	scene.getStylesheets().add("main.css");
 
+	window.setScene(scene);
 	window.show();
   }
 
   private GridPane addNumberButtons(Display display) {
 	GridPane layout = new GridPane();
 	Button[] btnArray = new Button[10];
-
-	layout.setHgap(10);
-	layout.setVgap(10);
-	layout.setPadding(new Insets(0, 10, 0, 10));
 
 	for(int i = 0; i <= 9; i++) {
 	  int value = i;
@@ -57,8 +59,11 @@ public class Main extends Application {
 	layout.add(btnArray[1], 0, 3);
 	layout.add(btnArray[2], 1, 3);
 	layout.add(btnArray[3], 2, 3);
-	layout.add(btnArray[0], 1, 4);
+	layout.add(btnArray[0], 0, 4);
+	GridPane.setColumnSpan(btnArray[0], 3);
+	btnArray[0].getStyleClass().add("zeroBtn");
 
+	// Divide button
 	Button divide = new Button("/");
 	divide.setOnAction(e -> {
 	  display.setMethod("/");
@@ -66,6 +71,7 @@ public class Main extends Application {
 	});
 	layout.add(divide, 1, 0);
 
+	// Multiple button
 	Button multiple = new Button("*");
 	multiple.setOnAction(e -> {
 	  display.setMethod("*");
@@ -73,6 +79,7 @@ public class Main extends Application {
 	});
 	layout.add(multiple, 2, 0);
 
+	// Minus button
 	Button minus = new Button("-");
 	minus.setOnAction(e -> {
 	  display.setMethod("-");
@@ -80,6 +87,7 @@ public class Main extends Application {
 	});
 	layout.add(minus, 3, 1);
 
+	// Add button
 	Button add = new Button("+");
 	add.setOnAction(e -> {
 	  display.setMethod("+");
@@ -87,6 +95,7 @@ public class Main extends Application {
 	});
 	layout.add(add, 3, 2);
 
+	// Clear button
 	Button clear = new Button("c");
 	clear.setOnAction(e -> {
 	  display.setMethod("c");
@@ -95,19 +104,16 @@ public class Main extends Application {
 	});
 	layout.add(clear, 0, 0);
 
+	// Equals button
 	Button equal = new Button("=");
 	equal.setOnAction(e -> {
 	  display.calculate();
 	  this.paint();
 	});
-	layout.add(equal, 3, 4);
-
+	layout.add(equal, 3, 3);
+	GridPane.setRowSpan(equal, 2);
+	equal.getStyleClass().add("equalsBtn");
 
     return layout;
   }
-
-
-  public static void main(String[] args) {
-        launch(args);
-    }
 }
