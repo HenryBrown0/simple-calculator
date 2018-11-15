@@ -1,8 +1,7 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
@@ -30,7 +29,9 @@ public class Main extends Application {
 	layout.setPadding(new Insets(5, 0, 0, 0));
 	layout.getChildren().addAll(display.getTotal(), display.getCurrent(), numberPad);
 
-	Scene scene = new Scene(layout);
+	VBox.setVgrow(numberPad, Priority.ALWAYS);
+
+	Scene scene = new Scene(layout, 300, 500);
 	scene.getStylesheets().add("main.css");
 
 	window.setScene(scene);
@@ -40,10 +41,26 @@ public class Main extends Application {
   private GridPane addNumberButtons(Display display) {
 	GridPane layout = new GridPane();
 	Button[] btnArray = new Button[10];
+	RowConstraints[] rowConst = new RowConstraints[5];
+	ColumnConstraints[] colConst = new ColumnConstraints[4];
+
+	for(int i = 0; i <= 4; i ++) {
+	  rowConst[i] = new RowConstraints();
+	  rowConst[i].setPercentHeight(20);
+	}
+	layout.getRowConstraints().addAll(rowConst[0], rowConst[1], rowConst[2], rowConst[3], rowConst[4]);
+
+	for(int i = 0; i <= 3; i ++) {
+	  colConst[i] = new ColumnConstraints();
+	  colConst[i].setPercentWidth(25);
+	}
+	layout.getColumnConstraints().addAll(colConst[0], colConst[1], colConst[2], colConst[3]);
 
 	for(int i = 0; i <= 9; i++) {
 	  int value = i;
 	  btnArray[i] = new Button(Integer.toString(i));
+	  btnArray[i].setMaxWidth(Double.MAX_VALUE);
+	  btnArray[i].setMaxHeight(Double.MAX_VALUE);
 	  btnArray[i].setOnAction(e -> {
 		display.addNumber(value);
 		this.paint();
@@ -61,10 +78,11 @@ public class Main extends Application {
 	layout.add(btnArray[3], 2, 3);
 	layout.add(btnArray[0], 0, 4);
 	GridPane.setColumnSpan(btnArray[0], 3);
-	btnArray[0].getStyleClass().add("zeroBtn");
 
 	// Divide button
 	Button divide = new Button("/");
+	divide.setMaxWidth(Double.MAX_VALUE);
+	divide.setMaxHeight(Double.MAX_VALUE);
 	divide.setOnAction(e -> {
 	  display.setMethod("/");
 	  this.paint();
@@ -73,6 +91,8 @@ public class Main extends Application {
 
 	// Multiple button
 	Button multiple = new Button("*");
+	multiple.setMaxWidth(Double.MAX_VALUE);
+	multiple.setMaxHeight(Double.MAX_VALUE);
 	multiple.setOnAction(e -> {
 	  display.setMethod("*");
 	  this.paint();
@@ -81,6 +101,8 @@ public class Main extends Application {
 
 	// Minus button
 	Button minus = new Button("-");
+	minus.setMaxWidth(Double.MAX_VALUE);
+	minus.setMaxHeight(Double.MAX_VALUE);
 	minus.setOnAction(e -> {
 	  display.setMethod("-");
 	  this.paint();
@@ -89,14 +111,18 @@ public class Main extends Application {
 
 	// Add button
 	Button add = new Button("+");
+	add.setMaxWidth(Double.MAX_VALUE);
+	add.setMaxHeight(Double.MAX_VALUE);
 	add.setOnAction(e -> {
 	  display.setMethod("+");
 	  this.paint();
 	});
-	layout.add(add, 3, 2);
+	layout.add(add, 3, 0);
 
 	// Clear button
 	Button clear = new Button("c");
+	clear.setMaxWidth(Double.MAX_VALUE);
+	clear.setMaxHeight(Double.MAX_VALUE);
 	clear.setOnAction(e -> {
 	  display.setMethod("c");
 	  display.calculate();
@@ -106,13 +132,14 @@ public class Main extends Application {
 
 	// Equals button
 	Button equal = new Button("=");
+	equal.setMaxWidth(Double.MAX_VALUE);
+	equal.setMaxHeight(Double.MAX_VALUE);
 	equal.setOnAction(e -> {
 	  display.calculate();
 	  this.paint();
 	});
-	layout.add(equal, 3, 3);
-	GridPane.setRowSpan(equal, 2);
-	equal.getStyleClass().add("equalsBtn");
+	layout.add(equal, 3, 1);
+	GridPane.setRowSpan(equal, 4);
 
     return layout;
   }

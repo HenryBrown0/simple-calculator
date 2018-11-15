@@ -4,12 +4,7 @@
 }
 .button {
     -fx-background-color: #8395a7;
-    -fx-min-width: 50pt;
-    -fx-min-height: 50pt;
     -fx-background-radius: 0;
-    -fx-border-color: black;
-    -fx-padding: 0.5pt;
-    -fx-border-width: 0;
 }
 .button:hover{
     -fx-background-color: #c8d6e5;
@@ -17,10 +12,4 @@
 .label {
     -fx-text-fill: #c8d6e5;
     -fx-padding: 5pt;
-}
-.equalsBtn {
-    -fx-min-height: 100pt;
-}
-.zeroBtn {
-    -fx-min-width: 151pt;
 }
