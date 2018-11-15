@@ -5,6 +5,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
+/**
+ * Creates a simple calculator.
+ * Build for Kent Computer Society JavaFx workshop.
+ * @author HenryBrown0
+ */
 public class Main extends Application {
   private Stage window;
   private Display display;
@@ -20,11 +25,15 @@ public class Main extends Application {
 
 	window.setTitle("Simple Calculator");
 	paint();
+	window.show();
   }
 
+  /**
+   * Paints the new scene to the stage
+   */
   private void paint() {
 	VBox layout = new VBox();
-	GridPane numberPad = addNumberButtons(display);
+	GridPane numberPad = addNumberButtons();
 
 	layout.setPadding(new Insets(5, 0, 0, 0));
 	layout.getChildren().addAll(display.getTotal(), display.getCurrent(), numberPad);
@@ -35,27 +44,33 @@ public class Main extends Application {
 	scene.getStylesheets().add("main.css");
 
 	window.setScene(scene);
-	window.show();
   }
 
-  private GridPane addNumberButtons(Display display) {
+  /**
+   * Creates the number pad for the calculator
+   * @return GridPane A GridPane with the number pad
+   */
+  private GridPane addNumberButtons() {
 	GridPane layout = new GridPane();
 	Button[] btnArray = new Button[10];
 	RowConstraints[] rowConst = new RowConstraints[5];
 	ColumnConstraints[] colConst = new ColumnConstraints[4];
 
+	// Set row constraints making rows responsive
 	for(int i = 0; i <= 4; i ++) {
 	  rowConst[i] = new RowConstraints();
 	  rowConst[i].setPercentHeight(20);
 	}
 	layout.getRowConstraints().addAll(rowConst[0], rowConst[1], rowConst[2], rowConst[3], rowConst[4]);
 
+	// Set column constraints making columns responsive
 	for(int i = 0; i <= 3; i ++) {
 	  colConst[i] = new ColumnConstraints();
 	  colConst[i].setPercentWidth(25);
 	}
 	layout.getColumnConstraints().addAll(colConst[0], colConst[1], colConst[2], colConst[3]);
 
+	// Create 0-9 buttons
 	for(int i = 0; i <= 9; i++) {
 	  int value = i;
 	  btnArray[i] = new Button(Integer.toString(i));
@@ -67,6 +82,7 @@ public class Main extends Application {
 	  });
 	}
 
+	// Place 0-9 buttons
 	layout.add(btnArray[7], 0, 1);
 	layout.add(btnArray[8], 1, 1);
 	layout.add(btnArray[9], 2, 1);
